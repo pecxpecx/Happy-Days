@@ -14,7 +14,7 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
       - uses: actions/checkout@v4
 
@@ -26,17 +26,21 @@ jobs:
       - name: Run Dagger MLOps Pipeline
         id: dagger-pipeline
         run: |
-          go run main.go --source . export --path .build
+          go run main.go
           
       - name: Upload Model Artifact 'model'
         uses: actions/upload-artifact@v4
         with:
           name: model
           path: |
-            ./.build/mlruns/  # Contains the actual model files and metadata
-            ./.build/artifacts/columns_list.json
+            ./mlruns/
+            ./artifacts/columns_list.json
             
+      - name: Download Model Artifact 'model'
+        uses: actions/download-artifact@v4
+        with:
+          name: model
+          path: model_artifact
+          
       - name: Validate Model Inference
         uses: lasselundstenjensen/itu-sdse-project-model-validator@main
-
-    
