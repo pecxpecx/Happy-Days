@@ -53,10 +53,11 @@ You must have the following tools installed on your local machine:
 1. **Start by cloning the repository**
 
 2. **Execute the MLOps Pipeline:**
-    Run the `main.go` file using the Go CLI. This single command handles everything: initializing the Dagger container, installing Python            dependencies, performing the DVC pull, and executing the three pipeline stages (`data_prep.py`, `train.py`, `deploy.py`). 
-
+   
     Type the following command from the root repo:
     **go run main.go**
+
+    this command will handle everything: initializing the Dagger container, installing Python dependencies, performing the DVC pull, and             executing the three pipeline stages (`data_prep.py`, `train.py`, `deploy.py`). 
 
 ### Post-Execution
 
