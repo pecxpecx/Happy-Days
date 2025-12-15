@@ -32,6 +32,7 @@ Our intention for this project is to generate the workflow through Github Workfl
 You must have the following tools installed on your local machine:
 
   **Go:** Required to run the Dagger orchestrator (`main.go`).
+  
   **Dagger CLI:** The command-line interface for running the Dagger pipeline.
 
 ### Execution
