@@ -6,9 +6,17 @@ on:
   push:
     branches:
       - main
+    paths-ignore: 
+      - '**.md'      # Ignore all Markdown files (like README.md)
+      - '.github/**' # Ignore changes to the workflow files themselves
+  
   pull_request:
     branches:
       - main
+    paths-ignore: 
+      - '**.md'
+      - '.github/**'
+
   workflow_dispatch:
 
 jobs:
