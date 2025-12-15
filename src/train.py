@@ -65,7 +65,7 @@ def run_training_pipeline(data_gold_path: str, artifacts_dir: str):
     # 1. Setup Directories
     os.makedirs(artifacts_dir, exist_ok=True)
     os.makedirs(MLFLOW_RUNS_DIR, exist_ok=True)
-    # The notebook also creates mlruns/.trash, we skip it as it's not strictly necessary.
+    os.makedirs(os.path.join(artifacts_dir, "model"), exist_ok=True)
 
     # 2. MLflow Experiment Setup
     mlflow.set_experiment(EXPERIMENT_NAME)
