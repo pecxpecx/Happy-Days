@@ -12,7 +12,6 @@ import datetime
 
 # --- Configuration and Constants ---
 
-# Constants used in the notebook
 CURRENT_DATE = datetime.datetime.now().strftime("%Y_%B_%d")
 ARTIFACT_PATH = "model" # Artifact path used during LR model logging
 MODEL_NAME = "lead_model"
@@ -128,12 +127,6 @@ def run_deployment_pipeline(model_name: str, experiment_name: str, model_results
             run_id=run_id_to_register,
             artifact_path=ARTIFACT_PATH # "model"
         )
-        
-        # Note: The notebook uses the LR run's artifact path even if XGBoost was better 
-        # based on model_results.json. This is likely an error in the original notebook 
-        # (XGBoost model file is saved but not logged to MLflow artifacts in a way 
-        # the model registry can easily access). We follow the notebook's final 
-        # registration of the LR model run.
         
         model_details = mlflow.register_model(model_uri=model_uri, name=model_name)
         
