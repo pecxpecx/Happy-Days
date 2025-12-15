@@ -38,7 +38,7 @@ Execute: Click the button to start the job on a GitHub-hosted runner.
 
 ## How To Run the Project Locally 
 
-Our intention for this project is to generate the workflow through Github Workflow, but it can also be done locally if you wish.
+Our intention for this project was to generate the workflow through the Github UI, but it can also be done locally if you wish.
 
 You must have the following tools installed on your local machine:
 
