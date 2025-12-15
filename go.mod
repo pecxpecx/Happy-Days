@@ -1,4 +1,4 @@
-module itu-sdse-project
+module Happy-Days
 
 go 1.25.1
 
