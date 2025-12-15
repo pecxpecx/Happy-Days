@@ -1,78 +1,33 @@
 # ITU BDS MLOPS'25 - Project
 
-## Task
+This repository contains our implementation of a fully reproducible end-to-end MLOps pipeline developed for the ITU BDS MLOps 2025 course. The goal was to transform the original exploratory notebook into a modular, automated ML system using DVC for data management, MLflow for experiment tracking, and GitHub Actions + Dagger for CI/CD automation.
 
-Based on the input provided (see below), fork the repository and restructure the code to adhere to the concepts and ideas you have seen throughout the course.  The diagram below provides a detailed overview of the structure that the solution is expected to follow.   
+![Project architecture]
 
-![Project architecture](./docs/project-architecture.png)
+itu-sdse-project/
+│
+├── .github/
+│   └── workflows/
+│       └── ci_pipeline.yml     # CI/CD Orchestration: Executes Dagger, then uploads the generated artifacts for testing.
+│
+├── artifacts/                  # Generated Output (Ignored by Git, Created during run)
+│   ├── train_data_gold.csv     # Generated: Final cleaned data.
+│   ├── model/
+│   │   └── model.pkl           # Generated: The trained Logistic Regression model (uploaded as artifact).
+│   └── ...                     # Other files like scaler.pkl, model_results.json, etc.
+│
+├── data/
+│   └── raw_data.csv.dvc        # DVC Pointer
+│
+├── mlruns/                     # MLflow Tracking and Registry (Generated Output, Ignored by Git)
+│   └── <Experiment_ID>/...     # Created: Holds run history, metrics, and the local Model Registry state.
+│
+├── src/                        # Core Python Pipeline
+│   ├── data_prep.py            # Phase 1: Executes 'dvc pull' and performs data cleaning.
+│   ├── train.py                # Phase 2: Training, MLflow run logging, and local model saving.
+│   └── deploy.py               # Phase 3: Model selection, registration to the 'mlruns' directory.
+│
+├── main.go                     # Orchestrator (Dagger): Defines the pipeline steps and exports the generated folders.
+├── requirements.txt            # Dependencies: Defines the Python environment for the Dagger container.
+└── README.md
 
-For the exam submission, we expect you to submit a pdf containing:
-- the list of members of the group
-- the link to the github.com public repository hosting your solution
-  - following the above, there is *no need* to invite the teaching staff as collaborators
-
-The repository linked in the submission should contain:
-
-- A README.md file that describes the project
-- GitHub automation workflow
-- Dagger workflow (in Go)
-- All history
-
-
-## Inputs
-
-You are given the following material:
-- Python monolith (see `notebooks` folder)
-- Raw input data (see `notebooks/artifacts` folder)
-- GitHub action to test model inference (see [`model-validator`](https://github.com/lasselundstenjensen/itu-sdse-project-model-validator) action)
-
-## Outputs
-
-- Your GitHub repository (including all history)
-  - A README.md file that describes the project
-  - GitHub automation workflow
-  - Dagger workflow (in Go)
-- Model artifact produced by GitHub workflow and named 'model'
-
-> **NOTE:**
-> The Dagger workflow can be run locally or inside the GitHub workflow—both are viable options during development.
->
-> The Dagger workflow can run locally and can also be made to produce outputs locally during development. But when wrapping the Dagger workflow in a GitHub workflow, the output is instead stored inside the GitHub runner (i.e. a virtual machine).
->
-> Use the publicly available [`actions/upload-artifact`](https://github.com/actions/upload-artifact) to store the model artifact in the GitHub worklow pipeline.
->
-> This model artifact can then be picked up by the [action provided](https://github.com/lasselundstenjensen/itu-sdse-project-model-validator), which will run some inference tests to ensure that the correct model was trained.
-
-
-## How will we assess
-
-Below, we provide information on how we will assess the submission clustered around several aspects.  The list relates to groups of size 3; if your group is of size 4, you are expected also to work on the optional items, i.e., to use pull requests and to provide tests.
-
-#### Versioning
-
-- Use of Git (semantic commit messages, branches, branch longevity, commit frequency/size)
-- Management of data
-- Use of pull requests (OPTIONAL)
-
-#### Programming
-
-- Decomposition of Python notebook
-- Adherance to standard data science MLOps project structure
-- Presence of tests (OPTIONAL)
-
-#### Workflow automation
-
-- Presence of a workflow that trains the model
-- Presence of a workflow that tests the model
-- Structure of Dagger workflow
-- Orchestration of Dagger workflow through GitHub workflow
-
-#### Documentation (README.md)
-
-- Description of project structure
-- How to run the code and generate the model artifact
-
-
-## Questions
-
-If you have any questions about the information shared here, please feel free to post them on Learnit. Answers to private emails on this topic will also be shared on Learnit, along with the original email content, so that everyone has access to the same information.
