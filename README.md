@@ -35,6 +35,8 @@ You must have the following tools installed on your local machine:
   
   **Dagger CLI:** The command-line interface for running the Dagger pipeline.
 
+  **Docker Desktop:** Must be running! Required by Dagger to execute the pipeline.
+
 ### Execution
 
 1. **Start by cloning the repository**
